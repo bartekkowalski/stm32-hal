@@ -807,7 +807,7 @@ where
         // Static write and read buffers?
         let (ptr, len) = (buf.as_ptr(), buf.len());
 
-        self.regs.cr1.modify(|_, w| w.spe().clear_bit());
+        // self.regs.cr1.modify(|_, w| w.spe().clear_bit());
 
         // todo: Accept u16 words too.
         // todo: Pri and Circular as args?
