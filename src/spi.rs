@@ -874,14 +874,23 @@ where
             }
         }
 
+        
+
+        // // 4. Enable the SPI by setting the SPE bit.
+        // self.regs.cr1.modify(|_, w| w.spe().set_bit());
+        if self.regs.cr1.read().spe().bit_is_clear() {
+            self.regs.cr1.modify(|_, w| w.spe().set_bit());
+        }
+
+
+
         // 3. Enable DMA Tx buffer in the TXDMAEN bit in the SPI_CR2 register, if DMA Tx is used.
         #[cfg(not(feature = "h7"))]
         self.regs.cr2.modify(|_, w| w.txdmaen().set_bit());
         #[cfg(feature = "h7")]
         self.regs.cfg1.modify(|_, w| w.txdmaen().set_bit());
 
-        // 4. Enable the SPI by setting the SPE bit.
-        self.regs.cr1.modify(|_, w| w.spe().set_bit());
+
     }
 
     /// Receive data using DMA. See L44 RM, section 40.4.9: Communication using DMA.
